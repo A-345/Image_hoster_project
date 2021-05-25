@@ -1,0 +1,349 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "User Administration API",
+    "version": "1.0.0",
+    "description": "## API of User Administration Services\n\nThis specification describes the endpoints, request/response model of the User Administration API. This API provides REST resources to manage images of Image Hoster application."
+  },
+    "host": "technical.io",
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "basePath": "/api/v1/images",
+    "tags": [
+      {
+        "name": "API#003 Images",
+        "description": "All operations marked with 'API#003 Images' are relevant to user administration use case"
+      }
+    ],
+    "paths": {
+      "/images/{id}": {
+        "get": {
+          "operationId": "getImage",
+          "tags": [
+            "API#003 Images"
+          ],
+          "security": [
+            {
+              "Authorization": [
+              ]
+            }
+          ],
+          "summary": "Image Administration - Get an existing Image",
+          "description": "API to get an existing image of Image Hoster application\n",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "$ref": "#/parameters/ImageId"
+            },
+            {
+              "$ref": "#/parameters/ClientId"
+            },
+            {
+              "$ref": "#/parameters/Authorization"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - Fetched image details",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              },
+              "schema": {
+                "$ref": "#/definitions/ImageDetailsResponse"
+              }
+            },
+            "400": {
+              "description": "BAD REQUEST - server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, mandatory elements are missing)",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "401": {
+              "description": "UNAUTHORIZED - user has provided wrong credentials",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "403": {
+              "description": "FORBIDDEN - request has not been applied because client application has no permission to perform action",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "404": {
+              "description": "NOT FOUND - Image (resource) does not exist",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "500": {
+              "description": "INTERNAL SERVER ERROR - server encountered an unexpected condition that prevented it from fulfilling the request.",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "operationId": "updateImage",
+          "tags": [
+            "API#003 Images"
+          ],
+          "security": [
+            {
+              "Authorization": [
+              ]
+            }
+          ],
+          "summary": "Image Administration - Update an existing Image",
+          "description": "API to update an existing image in Image Hoster application\n",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "$ref": "#/parameters/ImageId"
+            },
+            {
+              "$ref": "#/parameters/ClientId"
+            },
+            {
+              "$ref": "#/parameters/Authorization"
+            },
+            {
+              "in": "body",
+              "name": "UpdateImageRequest",
+              "description": "Request containing modified image details",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UpdateImageRequest"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - Image has been updated successfully",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "400": {
+              "description": "BAD REQUEST - server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, mandatory elements are missing)",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "401": {
+              "description": "UNAUTHORIZED - user has provided wrong credentials",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "403": {
+              "description": "FORBIDDEN - request has not been applied because client application has no permission to perform action",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "404": {
+              "description": "NOT FOUND -  Image (resource) does not exist",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "422": {
+              "description": "UNPROCESSABLE ENTITY - request was well-formed but server unable to process due to semantic errors",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              },
+              "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+              }
+            },
+            "500": {
+              "description": "INTERNAL SERVER ERROR - server encountered an unexpected condition that prevented it from fulfilling the request.",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "ClientId": {
+        "name": "client-id",
+        "type": "string",
+        "in": "header",
+        "required": true,
+        "description": "Mandatory request header about the caller of this API. Only an authorized clients are allowed to this API."
+      },
+      "Authorization": {
+        "name": "authorization",
+        "type": "string",
+        "in": "header",
+        "required": true,
+        "description": "Mandatory user credentials in bearer http authentication scheme format. Refer to the #/securityDefinitions for more information on this header."
+      },
+      "ImageId": {
+        "name": "id",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "description": "Unique identifier of Image in a standard UUID format"
+      }
+    },
+    "definitions": {
+      "ImageDetailsResponse": {
+        "type": "object",
+        "properties": {
+          "image":{
+            "type":"string",
+            "description":"This is image in Base64 format"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier of the user in a standard UUID format"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the image"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the image"
+          },
+          "status": {
+            "type": "string",
+            "description": "REGISTERED"
+          }
+        },
+        "required": [
+          "image",
+          "id",
+          "name",
+          "description",
+          "status"
+        ],
+        "example": {
+          "image":"sd-dcsc-vac",
+          "id": "7d174a25-ba31-45a8-85b4-b06ffc9d5f8f",
+          "name": "my_image",
+          "description": "This image was taken at 27 aug",
+          "status": "REGISTERED"
+        }
+      },
+      "UpdateImageRequest": {
+        "type": "object",
+
+        "properties": {
+          "image":{
+            "type":"string",
+            "description":"This is image in Base64 format"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the image"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the image"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the image"
+          }
+        },
+        "example": {
+          "image":"sdfv-sfdv-sf",
+          "name": "my_image",
+          "description": "New description",
+          "status": "Active"
+        }
+      },
+      "UpdateImageResponse":{
+        "type": "object",
+        "properties": {
+          "id":{
+            "type":"integer",
+            "description":"id of the image"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the image"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Application specific standard error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message stating the reason"
+          },
+          "root_cause": {
+            "type": "string",
+            "description": "Root cause of the Error"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "example": {
+          "code": "USR-001",
+          "message": "Email address already exist"
+        }
+      }
+    }
+  }
